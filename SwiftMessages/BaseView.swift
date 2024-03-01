@@ -182,6 +182,55 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
         }
     }
 
+    /*
+     MARK: - Swipe handler
+     */
+
+    /**
+     An optional swipe handler that will be called when the `backgroundView` is swipped horizontal.
+     */
+    
+    open var swipeHandler: ((_ view: BaseView) -> Void)? {
+        didSet {
+            installSwipeRecognizer()
+        }
+    }
+    
+    fileprivate lazy var swipeLeftRecognizer: UISwipeGestureRecognizer = {
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(MessageView.swiped(_:)))
+        swipeGesture.direction = .left
+        return swipeGesture
+    }()
+    
+    fileprivate lazy var swipeRightRecognizer: UISwipeGestureRecognizer = {
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(MessageView.swiped(_:)))
+        swipeGesture.direction = .right
+        return swipeGesture
+    }()
+   
+    
+    @objc func swiped(_ gesture: UISwipeGestureRecognizer) {
+        swipeHandler?(self)
+    }
+
+    
+    fileprivate func installSwipeRecognizer() {
+        guard let backgroundView = backgroundView else { return }
+        removeGestureRecognizer(swipeLeftRecognizer)
+        removeGestureRecognizer(swipeRightRecognizer)
+        backgroundView.removeGestureRecognizer(swipeLeftRecognizer)
+        backgroundView.removeGestureRecognizer(swipeRightRecognizer)
+
+        if swipeHandler != nil {
+            // Only install the Swipe recognizer if there is a Swipe handler,
+            // which makes it slightly nicer if one wants to install
+            // a custom gesture recognizer.
+            
+            backgroundView.addGestureRecognizer(swipeLeftRecognizer)
+            backgroundView.addGestureRecognizer(swipeRightRecognizer)
+        }
+    }
+
     open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if backgroundView != self {
             let backgroundViewPoint = convert(point, to: backgroundView)
