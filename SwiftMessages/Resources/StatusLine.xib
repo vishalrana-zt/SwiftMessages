@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,8 +14,18 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="96"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibD-SK-E1Y">
+                    <rect key="frame" x="570" y="45" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="EVi-hH-AH2"/>
+                        <constraint firstAttribute="width" constant="20" id="b5c-Hd-odk"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="tintColor"/>
+                    <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                    <state key="normal" image="errorIcon.png"/>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Message Body]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jtv-Px-mvN" userLabel="Body Label">
-                    <rect key="frame" x="20" y="44" width="560" height="18"/>
+                    <rect key="frame" x="20" y="48" width="540" height="14"/>
                     <accessibility key="accessibilityConfiguration">
                         <bool key="isElement" value="NO"/>
                     </accessibility>
@@ -28,10 +39,12 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="ibD-SK-E1Y" firstAttribute="leading" secondItem="Jtv-Px-mvN" secondAttribute="trailing" constant="10" id="0FJ-uW-ghg"/>
+                <constraint firstItem="ibD-SK-E1Y" firstAttribute="centerY" secondItem="Jtv-Px-mvN" secondAttribute="centerY" id="2Zv-TZ-UZW"/>
                 <constraint firstItem="Jtv-Px-mvN" firstAttribute="leading" secondItem="mGT-Jp-zjF" secondAttribute="leadingMargin" id="CHS-zo-loe"/>
                 <constraint firstItem="Jtv-Px-mvN" firstAttribute="top" secondItem="mGT-Jp-zjF" secondAttribute="topMargin" id="dki-gE-LYc"/>
                 <constraint firstAttribute="bottomMargin" secondItem="Jtv-Px-mvN" secondAttribute="bottom" id="gJ8-94-HgY"/>
-                <constraint firstAttribute="trailingMargin" secondItem="Jtv-Px-mvN" secondAttribute="trailing" id="hII-4c-bJX"/>
+                <constraint firstAttribute="trailing" secondItem="ibD-SK-E1Y" secondAttribute="trailing" constant="10" id="s6k-PR-Oe8"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
@@ -51,8 +64,15 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="bodyLabel" destination="Jtv-Px-mvN" id="bcr-eT-Nhm"/>
+                <outlet property="button" destination="ibD-SK-E1Y" id="Eyb-KM-LlQ"/>
             </connections>
             <point key="canvasLocation" x="495.6521739130435" y="346.20535714285711"/>
         </view>
     </objects>
+    <resources>
+        <image name="errorIcon.png" width="33" height="33.5"/>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
