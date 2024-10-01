@@ -67,6 +67,10 @@ class Presenter: NSObject {
         }
         return duration
     }
+    
+    var isOrphaned: Bool {
+        return installed && view.window == nil
+    }
 
     // MARK: - Constants
 
@@ -98,6 +102,7 @@ class Presenter: NSObject {
     private weak var delegate: PresenterDelegate?
     private var presentationContext = PresentationContext.viewController(Weak<UIViewController>(value: nil))
 
+    private var installed = false
     private var interactivelyHidden = false;
 
     // MARK: - Showing and hiding
@@ -411,7 +416,8 @@ class Presenter: NSObject {
             }
             maskingView.accessibleElements = elements
         }
-
+        
+        installed = true
         guard let containerView = presentationContext.viewValue() else { return }
         (presentationContext.viewControllerValue() as? WindowViewController)?.install()
         installMaskingView(containerView: containerView)
