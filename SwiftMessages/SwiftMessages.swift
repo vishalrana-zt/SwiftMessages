@@ -8,7 +8,6 @@
 
 import UIKit
 
-@MainActor
 private let globalInstance = SwiftMessages()
 
 /**
@@ -165,7 +164,6 @@ open class SwiftMessages {
         case warning
         case error
     }
-    
     
     /**
      Specifies options for dimming the background behind the message view
@@ -395,13 +393,18 @@ open class SwiftMessages {
          Supply an instance of `KeyboardTrackingView` to have the message view avoid the keyboard.
          */
         public var keyboardTrackingView: KeyboardTrackingView?
+        
+        /**
+         Specify a positive or negative priority to influence the position of a message in the queue based on it's relative priority.
+         */
+        public var priority: Int = 0
     }
     
     /**
      Not much to say here.
      */
-    public init() {}
-    
+    nonisolated public init() {}
+
     /**
      Adds the given configuration and view to the message queue to be displayed.
      
@@ -614,6 +617,10 @@ open class SwiftMessages {
     fileprivate func dequeueNext() {
         guard queue.count > 0 else { return }
         if let _current, !_current.isOrphaned { return }
+        // Sort by priority
+        queue = queue.sorted { left, right in
+            left.config.priority > right.config.priority
+        }
         let current = queue.removeFirst()
         self._current = current
         // Set `autohideToken` before the animation starts in case
@@ -867,15 +874,15 @@ extension SwiftMessages {
      a set of static APIs that wrap calls to this instance. For example, `SwiftMessages.show()`
      is equivalent to `SwiftMessages.sharedInstance.show()`.
      */
-    public static var sharedInstance: SwiftMessages {
+    nonisolated public static var sharedInstance: SwiftMessages {
         return globalInstance
     }
-    
+
     public static func show(viewProvider: @escaping ViewProvider) {
         globalInstance.show(viewProvider: viewProvider)
     }
     
-    nonisolated public static func show(config: Config, viewProvider: @escaping ViewProvider) {
+    public static func show(config: Config, viewProvider: @escaping ViewProvider) {
         globalInstance.show(config: config, viewProvider: viewProvider)
     }
     

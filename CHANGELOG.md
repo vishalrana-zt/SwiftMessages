@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 10.0.1
+
+## Features
+
+* #523 Add a `priority` configuration option.
+* #548 Adds 'TopBottomPresentable' protocol to allow animators implementation to reuse 'top/bottom' integration in presentation
+* #543 Make the `SwiftMessages` initializer `nonisolated` to improve interoperability with dependency injection frameworks like Factory.
+* #560 Add a new `swiftMessage` modifier variation that provides a ` MessageGeometryProxy` type to the message view builder—this works around an inssue with `GeometryReader` not working in `UIHostingController`.
+
+Fixes
+* Fix broken touch handling in iOS 18.
+
 ## 10.0.0
 
 ### Features
